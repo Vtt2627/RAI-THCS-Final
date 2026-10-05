@@ -1,5 +1,5 @@
 function loadResearchResults(){
-    return JSON.parse(localStorage.getItem("aiResponsibleResults")) || [];
+    return JSON.parse(localStorage.getItem("aiResponsibleResult")) || [];
 }
 
 function displayResearchDashboard(){
@@ -70,7 +70,7 @@ function analyzeResearchBehaviors(){
 }
 
 function displayResearchBehaviorAnalysis(){
-    const result = loadResearchResults();
+    const results = loadResearchResults();
     const container = document.getElementById("researchBehaviorAnalysis");
     container.innerHTML="";
     if(results.length === 0){
@@ -97,7 +97,7 @@ if (clearDataButton){
     clearDataButton.addEventListener("click", function(){
         const confirmed = confirm("Xóa dữ liệu lần làm bài gần nhất trên thiết bị này, sau khi xóa không thể hoàn tác.");
         if(confirmed){
-            localStorage.removeItem("aiResponsibleResults");
+            localStorage.removeItem("aiResponsibleResult");
             refreshResearchView();
         }
     });
