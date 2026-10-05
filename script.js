@@ -71,6 +71,7 @@ function showQuestion(){
     }else{
         nextButton.textContent = "Tiếp tục";
     }
+    nextButton.style.display = "inline-block";
     const options = document.getElementById("options");
     options.innerHTML = "";
     q.options.forEach(function(option, index){
