@@ -165,7 +165,7 @@ function saveResult(studentCode, score, average, behaviorResults, needAttention,
 function sendResultToSheet(studentCode, score, average, needAttention, resultRecommendations){
     let attentionText = "";
     if (Array.isArray(needAttention) && needAttention.length > 0){
-        attetionText = needAttention.join(", ");
+        attentionText = needAttention.join(", ");
     }
     let recommendationsText = "";
     if (Array.isArray(resultRecommendations)){
@@ -180,7 +180,7 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
             code: studentCode,
             score: score + "/" + questions.length,
             average: average,
-            needAttention: AttentionText,
+            needAttention: attentionText,
             recommendations: recommendationsText
         })
     }).then(function(res){return res.json();}).catch(function(err){
