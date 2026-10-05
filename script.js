@@ -170,7 +170,7 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
     let recommendationsText = "";
     if (Array.isArray(resultRecommendations)){
         recommendationsText = resultRecommendations.map(function(item){
-            return (item.behavior || "") + ": " +(item.recommendation ||
+            return (item.behavior || "") + ": " +(item.recommendation || "");
         }).join("\n");
     }
     fetch(GAS_URL, {
