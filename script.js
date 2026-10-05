@@ -154,13 +154,12 @@ function saveResult(studentCode, score, average, behaviorResults, needAttention,
         behaviorResults: behaviorResults,
         recommendations: resultRecommendations
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([resultData]));
+    localStorage.setItem("aiResponsibleResult", JSON.stringify([resultData]));
 }
 
 //gửi kết qảu lên gg sheet
 function sendResultToSheet(studentCode, score, average, needAttention, resultRecommendations){
-    const recommendationsText = resultRecommendations.map(function(item){return item.behavior + ": " + item.recommendation}).join("\n");
-
+    const recommendationsText = (resultRecommendations || []).map(function(item){return item.behavior + ": " + item.recommendation;}).join("\n");
     fetch(GAS_URL, {
         method: "POST",
         headers: {"Content-Type": "text/plain;charset=utf-8"},
