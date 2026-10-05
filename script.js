@@ -103,9 +103,7 @@ if (nextButton){
 function calculateScore(){
     let totalScore = 0;
     for (let i = 0; i<questions.length; i++){
-        if (answers[i] === questions[i].answer){
-            totalScore++;
-        }
+        totalScore++;
     }
     return totalScore;
 }
@@ -130,7 +128,7 @@ function getNeedAttention(behaviorResults){
             neeedAttention.push(behavior);
         }
     }
-    return neeedAttention;
+    return needAttention;
 }
 
 function getRecommendations(needAttention){
@@ -186,7 +184,7 @@ function showResult(score, needAttention, resultRecommendations){
         attentionResult.innerHTML = "<p>Chưa có nội dung cần chú ý trong các tình huống đánh giá.</p>";
     }else{
         needAttention.forEach(function(behavior){
-            attentionResult.innerHTML+= "<p>•" + behavior + "</p>"; 
+            attentionResult.innerHTML+= "<p>•" + behavior+ behaviors[behavior] + "-" + "</p>"; 
         });
     }
     resultRecommendations.forEach(function(item){
