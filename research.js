@@ -4,8 +4,8 @@ function loadResearchResults(){
 
 function displayResearchDashboard(){
     const results = loadResearchResults();
-    const total = document.getElememtById("researchTotalResults");
-    const average = document.getElememtById("researchAverageScore");
+    const total = document.getElementById("researchTotalResults");
+    const average = document.getElementById("researchAverageScore");
     if (results.length === 0){
         total.textContent = "Chưa có dữ liệu trên thiết bị này (dữ liệu tự xóa khi có HS mới mở web).";
         average.textContent = "";
@@ -23,7 +23,7 @@ function displayResearchDashboard(){
 
 function displayResearchResults(){
     const results = loadResearchResults();
-    const container = document.getElememtById("researchResults");
+    const container = document.getElementById("researchResults");
     container.innerHTML="";
     if(results.length ===0){
         container.textContent = "Chưa có dữ liệu trên thiết bị này.";
@@ -71,7 +71,7 @@ function analyzeResearchBehaviors(){
 
 function displayResearchBehaviorAnalysis(){
     const result = loadResearchResults();
-    const container = document.getElememtById("researchBehaviorAnalysis");
+    const container = document.getElementById("researchBehaviorAnalysis");
     container.innerHTML="";
     if(results.length === 0){
         container.textContent = "Chưa có dữ liệu.";
@@ -92,7 +92,7 @@ function refreshResearchView(){
     displayResearchBehaviorAnalysis();
 }
 
-const clearDataButton = document.getElememtById("clearDataButton");
+const clearDataButton = document.getElementById("clearDataButton");
 if (clearDataButton){
     clearDataButton.addEventListener("click", function(){
         const confirmed = confirm("Xóa dữ liệu lần làm bài gần nhất trên thiết bị này, sau khi xóa không thể hoàn tác.");
