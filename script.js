@@ -163,7 +163,16 @@ function saveResult(studentCode, score, average, behaviorResults, needAttention,
 
 //gửi kết qảu lên gg sheet
 function sendResultToSheet(studentCode, score, average, needAttention, resultRecommendations){
-    const recommendationsText = (resultRecommendations || []).map(function(item){return item.behavior + ": " + item.recommendation;}).join("\n");
+    let attentionText = "";
+    if (Array.isArray(needAttention) && needAttention.length > 0){
+        attetionText = needAttention.join(", ");
+    }
+    let recommendationsText = "";
+    if (Array.isArray(resultRecommendations)){
+        recommendationsText = resultRecommendations.map(function(item){
+            return (item.behavior || "") + ": " +(item.recommendation ||
+        }).join("\n");
+    }
     fetch(GAS_URL, {
         method: "POST",
         headers: {"Content-Type": "text/plain;charset=utf-8"},
@@ -171,7 +180,7 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
             code: studentCode,
             score: score + "/" + questions.length,
             average: average,
-            needAttention: needAttention,
+            needAttention: AttentionText,
             recommendations: recommendationsText
         })
     }).then(function(res){return res.json();}).catch(function(err){
