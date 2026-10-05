@@ -90,7 +90,7 @@ if (nextButton){
             alert("Vui lòng chọn một phương án.");
             return;
         }
-        answer[currentQuestion] = Number(selected.value);
+        answers[currentQuestion] = Number(selected.value);
         currentQuestion++;
         if(currentQuestion < questions.length){
             showQuestion();
@@ -112,7 +112,7 @@ function analyzeBehaviors(){
     let behaviorResults = {};
     for(let i = 0;i< questions.length; i++){
         const behavior = questions[i].behavior;
-        if (answer[i] === questions[i].answer){
+        if (answers[i] === questions[i].answer){
             behaviorResults[behavior] = 1;
         }else{
             behaviorResults[behavior] = 0;
@@ -125,7 +125,7 @@ function getNeedAttention(behaviorResults){
     let needAttention = [];
     for (const behavior in behaviorResults){
         if(behaviorResults[behavior] === 0){
-            neeedAttention.push(behavior);
+            needAttention.push(behavior);
         }
     }
     return needAttention;
