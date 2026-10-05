@@ -137,7 +137,11 @@ function getRecommendations(needAttention){
     let resultArr = [];
     for(let i = 0;i< needAttention.length; i++){
         const behavior = needAttention[i];
-        resultArr.push({behavior: behavior, recommendation: recommendations[behavior]});
+        if (recommendations && recommendations[behavior]){
+            resultArr.push({behavior: behavior, recommendation: recommendations[behavior]});
+        }else{
+            resultArr.push({behavior: behavior, recommendation: "Cần lưu ý quy tắc tuân thủ khi sử dụng AI."});
+        }
     }
     return resultArr;
 }
