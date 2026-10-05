@@ -187,7 +187,7 @@ function showResult(score, needAttention, resultRecommendations){
         attentionResult.innerHTML = "<p>Chưa có nội dung cần chú ý trong các tình huống đánh giá.</p>";
     }else{
         needAttention.forEach(function(behavior){
-            attentionResult.innerHTML+= "<p>•" + behavior+ behaviors[behavior] + "-" + "</p>"; 
+            attentionResult.innerHTML+= "<p>•" + behavior + "</p>"; 
         });
     }
     resultRecommendations.forEach(function(item){
