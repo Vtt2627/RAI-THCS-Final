@@ -64,14 +64,14 @@ if (startButton){
 
 function showQuestion(){
     const q = questions[currentQuestion];
-    document.getElememtById("questionNumber").textContent = q.id;
-    document.getElememtById("questionText").textContent = q.question;
+    document.getElementById("questionNumber").textContent = q.id;
+    document.getElementById("questionText").textContent = q.question;
     if(currentQuestion === questions.length - 1){
         nextButton.textContent = "Nộp bài";
     }else{
         nextButton.textContent = "Tiếp tục";
     }
-    const options = document.getElememtById("options");
+    const options = document.getElementById("options");
     options.innerHTML = "";
     q.options.forEach(function(option, index){
         options.innerHTML += `
@@ -103,7 +103,9 @@ if (nextButton){
 function calculateScore(){
     let totalScore = 0;
     for (let i = 0; i<questions.length; i++){
-        totalScore++;
+        if(answers[i] === questions[i].answer{
+            totalScore++;
+        }
     }
     return totalScore;
 }
