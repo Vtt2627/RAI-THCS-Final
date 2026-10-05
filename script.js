@@ -1,4 +1,4 @@
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzEVMbbFRA-Wp4QPdQxpvzHSNiYh52_ibSG6tyF8dC6_k_aHwWeohzTZEvOtqXkv4Nj/exec";
+const GAS_URL = "https://script.google.com/macros/library/d/1rQeOCRaYbCOAO4VbKs02boZETuqF7Pt3UGfYbhZM2QQHsgltoRWghwp6/7";
 const STORAGE_KEY = "aiResponsibleResult";
 
 let currentQuestion = 0;
