@@ -2,19 +2,19 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbzHgxiUgJlmC6N3ZfJJb_h9
 const STORAGE_KEY = "aiResponsibleResult";
 
 let currentQuestion = 0;
-let answer = [];
+let answers = [];
 let assignedCode = null;
 let hasSubmitted = false;
 
-const startButton = document.getElememtById("startButton");
-const quiz = document.getElememtById("quiz");
-const startSection = document.getElememtById("startSection");
-const nextButton = document.getElememtById("nextButton");
-const result = document.getElememtById("result");
-const scoreResult = document.getElememtById("scoreResult");
-const attentionResult = document.getElememtById("attentionResult");
-const recommendationResult = document.getElememtById("recommendationResult");
-const studentCodeDisplay = document.getElememtById("studentCodeDisplay");
+const startButton = document.getElementById("startButton");
+const quiz = document.getElementById("quiz");
+const startSection = document.getElementById("startSection");
+const nextButton = document.getElementById("nextButton");
+const result = document.getElementById("result");
+const scoreResult = document.getElementById("scoreResult");
+const attentionResult = document.getElementById("attentionResult");
+const recommendationResult = document.getElementById("recommendationResult");
+const studentCodeDisplay = document.getElementById("studentCodeDisplay");
 
 function clearPreviousLocalData(){
     localStorage.removeItem(STORAGE_KEY);
@@ -63,7 +63,7 @@ if (startButton){
 }
 
 function showQuestion(){
-    const q = question[currentQuestion];
+    const q = questions[currentQuestion];
     document.getElememtById("questionNumber").textContent = q.id;
     document.getElememtById("questionText").textContent = q.question;
     if(currentQuestion === questions.length - 1){
@@ -101,9 +101,11 @@ if (nextButton){
 }
 
 function calculateScore(){
-    let totlScore = 0;
+    let totalScore = 0;
     for (let i = 0; i<questions.length; i++){
-        totalScore++;
+        if (answers[i] === questions[i].answer){
+            totalScore++;
+        }
     }
     return totalScore;
 }
@@ -122,7 +124,7 @@ function analyzeBehaviors(){
 }
 
 function getNeedAttention(behaviorResults){
-    let neeedAttention = [];
+    let needAttention = [];
     for (const behavior in behaviorResults){
         if(behaviorResults[behavior] === 0){
             neeedAttention.push(behavior);
@@ -132,12 +134,12 @@ function getNeedAttention(behaviorResults){
 }
 
 function getRecommendations(needAttention){
-    let result = [];
+    let resultArr = [];
     for(let i = 0;i< needAttention.length; i++){
         const behavior = needAttention[i];
-        result.push({behavior: behavior, recommendation: recommendations[behavior]});
+        resultArr.push({behavior: behavior, recommendation: recommendations[behavior]});
     }
-    return result;
+    return resultArr;
 }
 
 //lưu trữ dữ liệu bằng cách ghi đè
@@ -150,7 +152,7 @@ function saveResult(studentCode, score, average, behaviorResults, needAttention,
         average: average,
         answers: answers,
         behaviorResults: behaviorResults,
-        getRecommendations: recommendations
+        recommendations: resultRecommendations
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify([resultData]));
 }
@@ -161,7 +163,7 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
 
     fetch(GAS_URL, {
         method: "POST",
-        headers: {"Content_Type": "text/plain;charset=utf-8"},
+        headers: {"Content-Type": "text/plain;charset=utf-8"},
         body: JSON.stringify({
             code: studentCode,
             score: score + "/" + questions.length,
@@ -184,7 +186,7 @@ function showResult(score, needAttention, resultRecommendations){
         attentionResult.innerHTML = "<p>Chưa có nội dung cần chú ý trong các tình huống đánh giá.</p>";
     }else{
         needAttention.forEach(function(behavior){
-            attentionResult.innerHTML+= "<p>•" + behavior + " — " + behavior[behavior] + "</p>"; 
+            attentionResult.innerHTML+= "<p>•" + behavior + "</p>"; 
         });
     }
     resultRecommendations.forEach(function(item){
@@ -205,6 +207,6 @@ function finishQuiz(){
     const average = Number(((score / questions.length) *9).toFixed(2));
     saveResult(assignedCode, score, average, behaviorResults, needAttention, resultRecommendations);
     sendResultToSheet(assignedCode, score, average, needAttention, resultRecommendations);
-    showResult(score, needAttention, recommendationResult);
+    showResult(score, needAttention, resultRecommendations);
 }
 requestStudentCode();
