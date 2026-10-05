@@ -1,4 +1,4 @@
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzHgxiUgJlmC6N3ZfJJb_h9rYuKOOtMwYlHZLO1QVN2td6R0L4jBtX0BfVp1u9Zxvmw/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwMWhrDaCb9cIDEoR03fjSGT7xx89AqAsOMUV9Qx9t45OzNxRpXLTOw3ycToxkZvcKf/exec";
 const STORAGE_KEY = "aiResponsibleResult";
 
 let currentQuestion = 0;
@@ -103,7 +103,7 @@ if (nextButton){
 function calculateScore(){
     let totalScore = 0;
     for (let i = 0; i<questions.length; i++){
-        if(answers[i] === questions[i].answer{
+        if(answers[i] === questions[i].answer){
             totalScore++;
         }
     }
