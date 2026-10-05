@@ -28,7 +28,6 @@ function requestStudentCode(retries = 3, delay = 2000){
         fetch(GAS_URL + "?action=getCode").then(function(res){return res.json();}).then(function(data){
             if(!data.code) throw new Error("Không nhận được mã hợp lệ");
             assignedCode = data.code;
-            clearPreviousLocalData();
             studentCodeDisplay.textContent = assignedCode;
             startButton.disabled = false;
         }).catch(function(err){
