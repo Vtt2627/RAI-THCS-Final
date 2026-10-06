@@ -198,7 +198,7 @@ function showResult(score, needAttention, resultRecommendations){
         attentionResult.innerHTML = "<p>Chưa có nội dung cần chú ý trong các tình huống đánh giá.</p>";
     }else{
         needAttention.forEach(function(behavior){
-            attentionResult.innerHTML+= "<p>•" + behavior + "</p>"; 
+            attentionResult.innerHTML+= "<p>•" + behavior +  " — " + behaviors[behavior] + "</p>"; 
         });
     }
     resultRecommendations.forEach(function(item){
@@ -216,7 +216,7 @@ function finishQuiz(){
     const behaviorResults = analyzeBehaviors();
     const needAttention = getNeedAttention(behaviorResults);
     const resultRecommendations = getRecommendations(needAttention);
-    const average = Number(((score / questions.length) *9).toFixed(2));
+    const average = Number(((score / questions.length) *10).toFixed(2));
     saveResult(assignedCode, score, average, behaviorResults, needAttention, resultRecommendations);
     sendResultToSheet(assignedCode, score, average, needAttention, resultRecommendations);
     showResult(score, needAttention, resultRecommendations);
