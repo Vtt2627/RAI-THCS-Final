@@ -5,6 +5,19 @@ let currentQuestion = 0;
 let answers = [];
 let assignedCode = null;
 let hasSubmitted = false;
+let selectedQuestions = [];
+
+const BEHAVIOR_ORDER = [
+    "HV01",
+    "HV02",
+    "HV03",
+    "HV04",
+    "HV05",
+    "HV06",
+    "HV07",
+    "HV08",
+    "HV09"
+];
 
 const startButton = document.getElementById("startButton");
 const quiz = document.getElementById("quiz");
