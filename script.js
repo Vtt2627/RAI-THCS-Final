@@ -74,6 +74,21 @@ if (startButton){
     })
 }
 
+function selectedOneQuestionPerBehavior(){
+    const selected = [];
+    BEHAVIOR_ORDER.forEach(function(behavior){
+        const candidates = questions.filter(function(q){
+            return q.behavior === behavior;
+        });
+        if (candidates.length === 0){
+            throw new Error("Không tìm thấy câu hỏi cho " + behavior);
+        }
+        const randomIndex = Math.floor(Math.random()*candidates.length);
+        selected.push(candidates[randomIndex]);
+    });
+    return selected;
+}
+
 function showQuestion(){
     const q = questions[currentQuestion];
     document.getElementById("questionNumber").textContent = q.id;
