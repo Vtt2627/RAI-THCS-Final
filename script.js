@@ -65,6 +65,24 @@ if (startButton){
             alert("Hệ thống chưa thể cấp được mã học sinh. Vui lòng tải lại trang.");
             return;
         }
+        try{
+            selectedQuestions = selectOneQuestionPerBehavior();
+            currentQuestion = 0;
+            answers = [];
+            hasSubmitted = false;
+            console.table{
+                selectedQuestions.map(function(q){
+                    return{
+                        HV:q.behavior,
+                        Cau:q.id
+                    };
+                })
+            };
+        }catch(error){
+            console.error(error);
+            alert("Lỗi khi tạo bộ câu hỏi. Vui lòng kiểm tra ngân hàng câu hỏi.");
+            return;
+        }
         quiz.style.display = "block";
         startSection.style.display = "none";
         if(window.RaiBackground){
@@ -90,8 +108,8 @@ function selectedOneQuestionPerBehavior(){
 }
 
 function showQuestion(){
-    const q = questions[currentQuestion];
-    document.getElementById("questionNumber").textContent = q.id;
+    const q = selectedQuestions[currentQuestion];
+    document.getElementById("questionNumber").textContent = "Câu" + (currentQuestion + 1) + "/" + selectedQuestions.length;
     document.getElementById("questionText").textContent = q.question;
     if(currentQuestion === questions.length - 1){
         nextButton.textContent = "Nộp bài";
@@ -130,8 +148,8 @@ if (nextButton){
 
 function calculateScore(){
     let totalScore = 0;
-    for (let i = 0; i<questions.length; i++){
-        if(answers[i] === questions[i].answer){
+    for (let i = 0; i<selectedQuestions.length; i++){
+        if(answers[i] === selectedQuestions[i].answer){
             totalScore++;
         }
     }
