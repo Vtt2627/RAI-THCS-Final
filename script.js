@@ -1,4 +1,4 @@
-const GAS_URL = "https://script.google.com/macros/s/AKfycbyQjKKgfZ1YhzRO2r3twRtzOXxpy_yEQNnGNpbPvg0B_5A-5veQQuPpVK6guTBFbGUT/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbz-5yR_OfUhyZh_cub0tUGZLMp0GoRBZtxv1SvoPmDKasdmLIbNuU_GobQ1E4hKDOa9/exec";
 const STORAGE_KEY = "aiResponsibleResult";
 
 let currentQuestion = 0;
@@ -158,9 +158,9 @@ function calculateScore(){
 
 function analyzeBehaviors(){
     let behaviorResults = {};
-    for(let i = 0;i< questions.length; i++){
-        const behavior = questions[i].behavior;
-        if (answers[i] === questions[i].answer){
+    for(let i = 0;i< selectedQuestions.length; i++){
+        const behavior = selectedQuestions[i].behavior;
+        if (answers[i] === selectedQuestions[i].answer){
             behaviorResults[behavior] = 1;
         }else{
             behaviorResults[behavior] = 0;
@@ -194,17 +194,25 @@ function getRecommendations(needAttention){
 
 //lưu trữ dữ liệu bằng cách ghi đè
 function saveResult(studentCode, score, average, behaviorResults, needAttention, resultRecommendations){
+    const selectedQuestionInfo = selectedQuestions.map(function(q){
+        return{
+            id:q.id,
+            behavior:q.behavior
+        };
+    });
     const resultData = {
         studentCode: studentCode,
         attempt: new Date().toLocaleString(),
+        version: "Final",
         score: score,
-        totalQuestions: questions.length,
+        totalQuestions: selectedQuestions.length,
         average: average,
         answers: answers,
+        selectedQuestions: selectedQuestionInfo,
         behaviorResults: behaviorResults,
         recommendations: resultRecommendations
     };
-    localStorage.setItem("aiResponsibleResult", JSON.stringify([resultData]));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([resultData]));
 }
 
 //gửi kết qảu lên gg sheet
@@ -219,17 +227,23 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
             return (item.behavior || "") + ": " +(item.recommendation || "");
         }).join("\n");
     }
+    const selectedQuestionsText=selectedQuestions.map(function(q){
+        return q.behavior + ":" + q.id;
+    }).join("|");
     fetch(GAS_URL, {
         method: "POST",
         headers: {"Content-Type": "text/plain;charset=utf-8"},
         body: JSON.stringify({
             code: studentCode,
-            score: score + "/" + questions.length,
+            score: score + "/" + selectedQuestions.length,
             average: average,
             needAttention: attentionText,
-            recommendations: recommendationsText
+            recommendations: recommendationsText,
+            version: "Final"
         })
-    }).then(function(res){return res.json();}).catch(function(err){
+    }).then(function(res){return res.json();
+    }).then(function(data){console.log("Google Sheet:", data); 
+    }).catch(function(err){
         console.error("Lỗi khi gửi kết quả về Google Sheet:", err);
     });
 }
