@@ -135,7 +135,8 @@ const questions = [
 
     {
         id: "C03B",
-        behavior: "Phương dùng AI tạo một hình ảnh cho dự án. Quy định yêu cầu ghi rõ công cụ đã sử dụng. Phương nên làm gì?",
+        behavior: "HV03", 
+        question: "Phương dùng AI tạo một hình ảnh cho dự án. Quy định yêu cầu ghi rõ công cụ đã sử dụng. Phương nên làm gì?",
         options: [
             "Nói hình ảnh hoàn toàn do mình tạo",
             "Không cần nói về AI",
