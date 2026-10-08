@@ -240,7 +240,7 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
             needAttention: attentionText,
             recommendations: recommendationsText,
             selectedQuestions: selectedQuestionsText, 
-            version: "V15"
+            version: "Final"
         })
     }).then(function(res){return res.json();
     }).then(function(data){console.log("Google Sheet:", data); 
