@@ -28,11 +28,11 @@ const scoreResult = document.getElementById("scoreResult");
 const attentionResult = document.getElementById("attentionResult");
 const recommendationResult = document.getElementById("recommendationResult");
 const studentCodeDisplay = document.getElementById("studentCodeDisplay");
-
+/*
 function clearPreviousLocalData(){
     localStorage.removeItem(STORAGE_KEY);
 }
-
+*/
 //xin cấp mã 
 function requestStudentCode(retries = 3, delay = 2000){
     studentCodeDisplay.textContent = "Đang cấp mã học sinh...";
@@ -66,18 +66,18 @@ if (startButton){
             return;
         }
         try{
-            selectedQuestions = selectOneQuestionPerBehavior();
+            selectedQuestions = selectedOneQuestionPerBehavior();
             currentQuestion = 0;
             answers = [];
             hasSubmitted = false;
-            console.table{
+            console.table(
                 selectedQuestions.map(function(q){
                     return{
                         HV:q.behavior,
                         Cau:q.id
                     };
                 })
-            };
+            );
         }catch(error){
             console.error(error);
             alert("Lỗi khi tạo bộ câu hỏi. Vui lòng kiểm tra ngân hàng câu hỏi.");
@@ -111,7 +111,7 @@ function showQuestion(){
     const q = selectedQuestions[currentQuestion];
     document.getElementById("questionNumber").textContent = "Câu" + (currentQuestion + 1) + "/" + selectedQuestions.length;
     document.getElementById("questionText").textContent = q.question;
-    if(currentQuestion === questions.length - 1){
+    if(currentQuestion === selectedQuestions.length - 1){
         nextButton.textContent = "Nộp bài";
     }else{
         nextButton.textContent = "Tiếp tục";
@@ -138,7 +138,7 @@ if (nextButton){
         }
         answers[currentQuestion] = Number(selected.value);
         currentQuestion++;
-        if(currentQuestion < questions.length){
+        if(currentQuestion < selectedQuestions.length){
             showQuestion();
         }else{
             finishQuiz();
@@ -239,7 +239,8 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
             average: average,
             needAttention: attentionText,
             recommendations: recommendationsText,
-            version: "Final"
+            selectedQuestions: selectedQuestionsText, 
+            version: "V15"
         })
     }).then(function(res){return res.json();
     }).then(function(data){console.log("Google Sheet:", data); 
@@ -251,7 +252,7 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
 function showResult(score, needAttention, resultRecommendations){
     quiz.style.display = "none";
     result.style.display = "block";
-    scoreResult.textContent = "Điểm của bạn:" + score + "/" + questions.length;
+    scoreResult.textContent = "Điểm của bạn:" + score + "/" + selectedQuestions.length;
     attentionResult.innerHTML = "";
     recommendationResult.innerHTML = "";
     if (needAttention.length === 0){
@@ -265,7 +266,7 @@ function showResult(score, needAttention, resultRecommendations){
         recommendationResult.innerHTML += "<p>•" + item.behavior + ": " + item.recommendation + "</p>";
     })
     if (window.RaiBackground){
-        window.RaiBackground.setWarning(score < questions.length / 2);
+        window.RaiBackground.setWarning(score < selectedQuestions.length / 2);
     }
 }
 
@@ -276,7 +277,7 @@ function finishQuiz(){
     const behaviorResults = analyzeBehaviors();
     const needAttention = getNeedAttention(behaviorResults);
     const resultRecommendations = getRecommendations(needAttention);
-    const average = Number(((score / questions.length) *10).toFixed(2));
+    const average = Number(((score / selectedQuestions.length) *10).toFixed(2));
     saveResult(assignedCode, score, average, behaviorResults, needAttention, resultRecommendations);
     sendResultToSheet(assignedCode, score, average, needAttention, resultRecommendations);
     showResult(score, needAttention, resultRecommendations);
