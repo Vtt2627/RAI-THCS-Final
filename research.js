@@ -18,7 +18,7 @@ function displayResearchDashboard(){
         ?latest.average
         :Number(((latest.score / totalQuestions)*10).toFixed(2));
     total.textContent = "Mã HS gần nhất trên thiết bị này: " + latest.studentCode;
-    average.textContent ="Điểm" + latest.score + "/" +totalQuestions + "(thang 10:" +avgScale10.toFixed(2) +")";
+    average.textContent ="Điểm" + latest.score + "/" +totalQuestions +")";
 }
 
 function displayResearchResults(){
