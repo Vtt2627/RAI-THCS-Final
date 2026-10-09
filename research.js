@@ -13,12 +13,12 @@ function displayResearchDashboard(){
         return;
     }
     const latest = results[results.length-1];
-    const totalQuestions = latest.totalQuestions || questions.length;
+    const totalQuestions = latest.totalQuestions || selectedQuestions.length;
     const avgScale10 = typeof latest.average === "number"
         ?latest.average
         :Number(((latest.score / totalQuestions)*10).toFixed(2));
     total.textContent = "Mã HS gần nhất trên thiết bị này: " + latest.studentCode;
-    average.textContent ="Điểm: " + latest.score + "/" +totalQuestions;
+    average.textContent ="Điểm: " + latest.score + "/" + totalQuestions;
 }
 
 function displayResearchResults(){
