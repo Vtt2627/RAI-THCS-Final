@@ -92,6 +92,7 @@ if (startButton){
     })
 }
 
+//lựa chọn 1in2 mỗi hành vi
 function selectedOneQuestionPerBehavior(){
     const selected = [];
     BEHAVIOR_ORDER.forEach(function(behavior){
@@ -107,6 +108,7 @@ function selectedOneQuestionPerBehavior(){
     return selected;
 }
 
+//hiễn thị câu hỏi
 function showQuestion(){
     const q = selectedQuestions[currentQuestion];
     document.getElementById("questionNumber").textContent = "Câu" + (currentQuestion + 1) + "/" + selectedQuestions.length;
@@ -249,6 +251,7 @@ function sendResultToSheet(studentCode, score, average, needAttention, resultRec
     });
 }
 
+//xem kết quả
 function showResult(score, needAttention, resultRecommendations){
     quiz.style.display = "none";
     result.style.display = "block";
@@ -270,6 +273,7 @@ function showResult(score, needAttention, resultRecommendations){
     }
 }
 
+//kết thúc - đưa vào lưu trữ
 function finishQuiz(){
     if (hasSubmitted) return;
     hasSubmitted = true;
